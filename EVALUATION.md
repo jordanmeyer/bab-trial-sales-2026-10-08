@@ -87,3 +87,8 @@ The version 4 URLs cover current local stylesheet, entry module and model. `test
 SALES-13 specifically requires a novice to download/edit/import/corrupt/correct a CSV and recover. The authored harness establishes app behavior under synthetic input events; it does not close that human requirement. Actual uncoached interpretation/limitation tasks also remain open. The optional returns assignment is limited to stable IDs, separate event grain, aggregate-before-join and cohort/observation-time reasoning; no returns feature is added to this introductory app.
 
 Staged whitespace checks passed with the existing scoped CRLF-fixture allowance. Source/plan/tests were committed before this report-only addition; final relevant-source/PLAN/BUILD-STORY diffs against that checkpoint were empty, as were ordinary and ignored untracked relevant-file listings. Only this evaluation changed. No push or current live verification occurred. This is a bounded source and import/render integration result, not full checklist closure or publication approval.
+
+
+### Current-checkpoint browser suite confirmation
+
+After the source/report commits, root reran the actual browser suite against the current files: **46/46 passed, zero failures**, including the final review labels and current asset references. Source checkpoint remains `3734d1f1676267bd8ec44924941fcda1a198563a`; no app/model/test change followed the run. For Sales this supersedes the earlier timing limitation on the model-suite observation; the prior observation remains truthful history. This new suite result does not close pending actual layout, export, mobile-keyboard, screen-reader or novice tasks. No push occurred.
