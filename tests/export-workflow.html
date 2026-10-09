@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sales template, exports and filter recovery</title><style>body{font:16px/1.5 system-ui,sans-serif;margin:24px;color:#262626}button{font:inherit;padding:12px 18px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f3f2f1;padding:16px;max-width:1100px}iframe{display:block;width:1280px;height:844px;border:1px solid #666;margin-top:24px}.pass{color:#1d6363}.fail{color:#993d00}</style></head>
+<body>
+<h1>Sales template, exports and filter recovery</h1>
+<p>This authored same-origin check fetches the app's linked synthetic template, imports that actual file with File/DataTransfer, and captures real CSV/JSON Blobs. It drives the actual filter controls and recovery buttons. No calculation or application result is stubbed. Native file pickers, saving, keyboard use and human learning are not tested.</p>
+<button id="run" disabled>Run four workflow checks</button><p id="status" role="status">Loading the app…</p><ol id="results"></ol><pre id="report">No observations yet.</pre><iframe title="Sales lens application under test"></iframe>
+<script>
+const frame=document.querySelector('iframe'),run=document.querySelector('#run'),status=document.querySelector('#status'),results=document.querySelector('#results'),report=document.querySelector('#report');
+const header='date,region,product,quantity,unit_price,unit_cost',fileName='synthetic-template-review.csv';
+const assert=(value,message)=>{if(!value)throw Error(message);};
+const $=id=>frame.contentDocument.getElementById(id);
+function waitFor(condition,label){return new Promise((resolve,reject)=>{const check=()=>{if(!condition())return;observer.disconnect();clearTimeout(timer);resolve();};const observer=new MutationObserver(check),timer=setTimeout(()=>{observer.disconnect();reject(Error(label+' did not complete within 10 seconds.'));},10000);observer.observe(frame.contentDocument.body,{subtree:true,childList:true,characterData:true,attributes:true});check();});}
+function state(){return {status:$('status').textContent,sourceCount:$('count').textContent,coverage:$('coverage').textContent,filters:Object.fromEntries(['start','end','region','product'].map(id=>[id,$(id).value])),activeFilters:$('active-filters').textContent,revenue:$('revenue').textContent,cost:$('cost').textContent,contribution:$('profit').textContent,units:$('units').textContent,filterError:$('filter-error').hidden?null:$('filter-error').textContent,importError:$('error').hidden?null:$('error').textContent,invalidResultVisible:!$('invalid-result').hidden,validResultVisible:!$('valid-result').hidden,emptyVisible:!$('empty').hidden,emptyMessage:$('empty-message').textContent,rows:[...$('rows').rows].map(row=>[...row.cells].map(cell=>cell.textContent)),groups:[...$('groups').rows].map(row=>[...row.cells].map(cell=>cell.textContent))};}
+function filters(values){for(const [id,value]of Object.entries(values)){$(id).value=value;assert($(id).value===value,'Missing or invalid filter value: '+id+'='+value);$(id).dispatchEvent(new frame.contentWindow.Event('input',{bubbles:true}));}}
+function captureDownloads(){const w=frame.contentWindow,create=w.URL.createObjectURL,click=w.HTMLAnchorElement.prototype.click,blobs=new Map(),downloads=[];w.URL.createObjectURL=function(blob){const url=create.call(this,blob);blobs.set(url,blob);return url;};w.HTMLAnchorElement.prototype.click=function(){if(this.download&&blobs.has(this.href)){downloads.push({name:this.download,blob:blobs.get(this.href)});return;}return click.call(this);};return {downloads,restore(){w.URL.createObjectURL=create;w.HTMLAnchorElement.prototype.click=click;}};}
+run.onclick=async()=>{
+ run.disabled=true;results.replaceChildren();status.textContent='Running four actual app workflows…';const observations=[];let capture;
+ const show=()=>{report.textContent=JSON.stringify({scope:'Linked-template fetch, authored File/DataTransfer import and real generated Blob capture; native picker/save and human tasks not observed.',environment:{userAgent:navigator.userAgent,appURL:frame.contentWindow.location.href,frameWidth:frame.contentWindow.innerWidth,frameHeight:frame.contentWindow.innerHeight},observations},null,2);};
+ const record=(name,details)=>{observations.push({name,status:'PASS',observedAt:new Date().toISOString(),...details});const li=document.createElement('li');li.className='pass';li.textContent='PASS — '+name;results.append(li);show();};
+ try{
+  await waitFor(()=>$('status').textContent.startsWith('Loaded '),'Initial app load');
+  $('demo').click();const d=frame.contentDocument,w=frame.contentWindow,link=d.querySelector('a[download][href="./template.csv"]');assert(link,'The app has no linked template download.');
+  const response=await fetch(link.href);assert(response.ok,'The linked template did not load.');const template=await response.text(),lines=template.trimEnd().split(/\r?\n/);
+  assert(lines[0]===header&&lines.length===13,'The linked synthetic template must contain the six headers and 12 data lines.');
+  const transfer=new w.DataTransfer();transfer.items.add(new w.File([template],fileName,{type:'text/csv'}));$('upload').files=transfer.files;$('upload').dispatchEvent(new w.Event('change',{bubbles:true}));
+  await waitFor(()=>$('status').textContent===`Loaded ${fileName}.`,'Linked-template import');
+  const loaded=state();assert(loaded.sourceCount===`12 of 12 records · ${fileName}`&&loaded.rows.length===12&&!loaded.importError,'Imported template identity/count is incorrect.');
+  assert(loaded.revenue==='$2,950.00'&&loaded.cost==='$2,350.00'&&loaded.contribution==='$600.00'&&loaded.units==='220','Actual linked template differs from the independent twelve-row totals.');
+  record('Actual linked template has 12 rows and imports with exact source identity and totals',{templateURL:link.href,header:lines[0],dataLines:lines.length-1,firstDataLine:lines[1],lastDataLine:lines.at(-1),view:loaded});
+
+  filters({start:'2026-09-01',end:'2026-10-31',region:'North',product:'Pen'});const selected=state();
+  assert(selected.sourceCount===`2 of 12 records · ${fileName}`&&selected.revenue==='$350.00'&&selected.cost==='$210.00'&&selected.contribution==='$140.00'&&selected.units==='35','September–October North Pen view differs from 15+20 units at $10/$6.');
+  capture=captureDownloads();$('export-csv').click();$('export').click();assert(capture.downloads.length===2,'Expected one matching CSV and one context JSON download.');
+  const csv=capture.downloads.find(item=>item.name==='sales-matching-rows.csv'),json=capture.downloads.find(item=>item.name==='sales-view-context-and-rows.json');assert(csv&&json,'Generated download filenames are incorrect.');
+  const [csvText,jsonText]=await Promise.all([csv.blob.text(),json.blob.text()]),saved=JSON.parse(jsonText);
+  const expectedCSV=header+'\n"2026-09-03","North","Pen","15","10.00","6.00"\n"2026-10-03","North","Pen","20","10.00","6.00"\n';
+  assert(csvText===expectedCSV,'Generated matching CSV differs from both exact selected sales lines.');
+  assert(saved.format==='sales-lens-view-v1'&&saved.source===fileName&&JSON.stringify(saved.filters)===JSON.stringify(selected.filters),'JSON source identity or active filters differ from the completed view.');
+  assert(saved.units.includes('USD integer cents')&&saved.units.includes('quantity is whole units')&&saved.provenance.includes('imported data is unverified')&&saved.limits.includes('overhead'),'JSON omits its units, provenance or model limits.');
+  const expectedSummary={revenue:35000,cost:21000,profit:14000,units:35};
+  assert(JSON.stringify(saved.summary)===JSON.stringify(expectedSummary),'JSON totals differ from independent integer-cent totals.');
+  assert(saved.groups.length===1&&saved.groups[0].region==='North'&&saved.groups[0].product==='Pen'&&Object.entries(expectedSummary).every(([key,value])=>saved.groups[0][key]===value),'JSON group identity or totals differ from the selected group.');
+  assert(JSON.stringify(saved.rows.map(row=>[row.date,row.region,row.product,row.quantity,row.price,row.cost]))===JSON.stringify([['2026-09-03','North','Pen',15,1000,600],['2026-10-03','North','Pen',20,1000,600]]),'JSON raw rows differ from the CSV/view or confuse cents with dollars.');
+  record('Filtered matching CSV and analytical JSON agree on rows, source, cents, filters, totals and group',{view:selected,exports:[{name:csv.name,type:csv.blob.type,text:csvText},{name:json.name,type:json.blob.type,value:saved}]});
+
+  filters({start:'2026-10-03',end:'2026-10-01'});const invalid=state();
+  assert(invalid.filterError&&invalid.invalidResultVisible&&!invalid.validResultVisible&&invalid.sourceCount===`Invalid filter; 12 source records remain loaded from ${fileName}.`,'Reversed dates must hide invalid results while preserving source identity.');
+  assert($('start').getAttribute('aria-invalid')==='true'&&$('end').getAttribute('aria-invalid')==='true','Both invalid interval controls must identify their error.');
+  d.querySelector('#filters button[type="reset"]').click();await waitFor(()=>$('count').textContent===`12 of 12 records · ${fileName}`&&$('filter-error').hidden,'Clear invalid date filters');const recovered=state();
+  assert(Object.values(recovered.filters).every(value=>value==='')&&recovered.validResultVisible&&!recovered.invalidResultVisible&&recovered.revenue==='$2,950.00'&&recovered.contribution==='$600.00','Clear filters did not restore the complete imported view.');
+  record('Reversed dates are invalid, not zero sales; actual Clear filters restores the imported dataset',{invalid,recovered});
+
+  filters({start:'2027-01-01',end:'2027-12-31',region:'North',product:'Pen'});const empty=state();
+  assert(empty.sourceCount===`0 of 12 records · ${fileName}`&&empty.emptyVisible&&empty.validResultVisible&&!empty.invalidResultVisible&&!empty.filterError&&empty.rows.length===0&&empty.revenue==='$0.00'&&empty.cost==='$0.00'&&empty.contribution==='$0.00'&&empty.units==='0','A valid empty interval must show zero matched sales, not an invalid filter or stale totals.');
+  assert(empty.emptyMessage.includes(fileName)&&empty.emptyMessage.includes('2027-01-01')&&empty.emptyMessage.includes('North'),'Empty-state explanation omits source or active scope.');
+  $('clear-empty').click();await waitFor(()=>$('count').textContent===`12 of 12 records · ${fileName}`&&$('empty').hidden,'Empty-state Clear these filters');const afterEmpty=state();
+  assert(Object.values(afterEmpty.filters).every(value=>value==='')&&afterEmpty.rows.length===12&&afterEmpty.revenue==='$2,950.00'&&afterEmpty.contribution==='$600.00','Empty-state recovery did not restore the imported source and complete totals.');
+  record('Valid no-match scope is explained and its actual recovery button restores all imported rows',{empty,recovered:afterEmpty});
+  status.textContent='4/4 passed. Actual app import/filter/export code exercised; native saving and human tasks remain unverified.';
+ }catch(error){observations.push({status:'FAIL',error:error.message,current:state()});const li=document.createElement('li');li.className='fail';li.textContent='FAIL — '+error.message;results.append(li);status.textContent='FAILED — '+error.message;show();}
+ finally{capture?.restore();run.disabled=false;}
+};
+frame.addEventListener('load',()=>{if(!$('filters'))return;run.disabled=false;status.textContent='App frame loaded. Run waits for the actual app module.';});
+frame.src='../app/';
+</script>
+</body>
+</html>
