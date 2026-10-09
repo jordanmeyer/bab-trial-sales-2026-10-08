@@ -45,3 +45,13 @@ Tested commit: `ac70646e09ac7f83e87460138c4291d566ea0513`. The updated PLAN.md a
 Parent CUA browser observed **42/42 passed, 0 failed**. October 2–3 + North + Notebook displayed `From: 2026-10-02 · Through: 2026-10-03 · Region: North · Product: Notebook` with independently expected $40/$24/$16/2 units. Enter on Clear filters restored `No filters` and $390/$234/$156/17. At 319px, date-plus-North summary wrapped without page horizontal overflow; desktop 1439px remained readable. This rounds out the new feature's affected checks; earlier import validation and model boundary coverage remain applicable because neither implementation changed. Existing reported inspection limits still apply.
 
 Separate simplification pass: the same filter object now supplies filtering and summary text, avoiding independent filter state; one text node renders the summary and no extra controls, library or harness was introduced.
+
+## Live update failure after Round 3
+
+The second deployment's Actions run succeeded at `e2f238b402022b38899fc1686456f9f925205f5c`, but parent CUA navigation plus reload showed new HTML with old app.js: North totals were correct while the new active-filter summary was missing. This is a failed returning-visitor update, distinct from the passing local Round 3. An earlier parallel pricing observation first prompted preventative correction; later sales inspection established its own defect. Build changes the relative entry script URL to `./app.js?v=2`. The model is unchanged; the correction requires a new source checkpoint, local entry/summary retest and final live verification.
+
+## Round 4 — cache-corrected entry passed locally
+
+Tested commit: `774f00d46c6f777dfd861d39d971a80dbfc3bb3a`. Relevant source/plan freshness checks passed before and after the parent CUA rerun. PLAN.md and all formulas/cases remain unchanged; only the entry script URL differs from Round 3.
+
+Parent observed the versioned entry loading successfully: North displayed the summary with $240/$144/$96/12; Enter Clear filters, after the scheduled redraw, displayed No filters with $390/$234/$156/17. Browser tests again showed **42/42 passed, 0 failed**. This proves the local entry and summary behavior; successful live correction still requires the actual deployed returning-visitor check. Earlier failed reset and live cache rounds are retained. Existing inspection limitations remain.
