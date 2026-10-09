@@ -1,6 +1,8 @@
 # Sales lens
 
-A self-contained dashboard for synthetic retail exercises. Upload a CSV, combine inclusive date/region/product filters, and inspect revenue, product cost, contribution profit and units. Reset to demo clears filters and restores the three hand-checkable sample rows. Download the synthetic template for the required column format.
+A self-contained dashboard for synthetic retail exercises. Upload a CSV, combine inclusive date/region/product filters, and inspect revenue, product cost, contribution profit and units. The active-filter summary explains which rows the totals include. Reset to demo clears filters and restores the three hand-checkable sample rows. Download the synthetic template for the required column format.
+
+Live: https://jordanmeyer.github.io/bab-trial-sales-2026-10-08/
 
 Source: https://github.com/jordanmeyer/bab-trial-sales-2026-10-08
 

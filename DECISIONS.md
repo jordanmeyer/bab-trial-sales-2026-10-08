@@ -7,3 +7,5 @@
 - All data is synthetic or visitor-selected transient local data. No services, storage, analytics or external assets.
 - Built-in Georgia and Arial substitute for downloadable brand families. Unchanged Duke navy/royal are used as public design guidance; no marks or endorsement claims.
 - Initial public destination authorized: jordanmeyer/bab-trial-sales-2026-10-08. Parent coordinates repository creation/push/live checks.
+
+- After the first live deployment, the simulated student approved an active-filter summary to reduce confusion between filtered and whole-dataset totals. It changes presentation only.

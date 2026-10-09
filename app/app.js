@@ -5,12 +5,14 @@ let rows = [], source = '';
 function render() {
   const reversed = $('#start').value && $('#end').value && $('#start').value > $('#end').value;
   $('#filter-error').hidden = !reversed;
-  const visible = reversed ? [] : filterSales(rows, Object.fromEntries(['start', 'end', 'region', 'product'].map(key => [key, $(`#${key}`).value])));
+  const filters = Object.fromEntries(['start', 'end', 'region', 'product'].map(key => [key, $(`#${key}`).value]));
+  const visible = reversed ? [] : filterSales(rows, filters);
   const sum = totals(visible);
   for (const key of ['revenue', 'cost', 'profit']) $(`#${key}`).textContent = money(sum[key]);
   $('#profit').classList.toggle('negative', sum.profit < 0);
   $('#units').textContent = sum.units.toLocaleString('en-US');
   $('#count').textContent = `${visible.length.toLocaleString('en-US')} of ${rows.length.toLocaleString('en-US')} records · ${source}`;
+  $('#active-filters').textContent = [['From', filters.start], ['Through', filters.end], ['Region', filters.region], ['Product', filters.product]].filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`).join(' · ') || 'No filters';
   $('#empty').hidden = visible.length > 0;
   $('#rows').replaceChildren(...visible.map(row => {
     const tr = document.createElement('tr');

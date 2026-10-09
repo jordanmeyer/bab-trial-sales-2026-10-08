@@ -22,7 +22,7 @@ a:hover { color: #00539B; }
 .muted { color: #666; font-size: .9rem; }
 summary { cursor: pointer; color: #012169; padding: .35rem 0; }
 details p { max-width: 70ch; }
-code { overflow-wrap: anywhere; }
+code, #active-filters { overflow-wrap: anywhere; }
 #error, #filter-error { border-left: 4px solid #C84E00; background: #FCF7E5; padding: 1rem; }
 .metrics { display: grid; grid-template-columns: repeat(4, 1fr); background: white; border-top: 4px solid #012169; }
 .metrics div { padding: 1.3rem; min-width: 0; }

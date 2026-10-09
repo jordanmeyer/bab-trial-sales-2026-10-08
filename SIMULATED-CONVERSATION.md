@@ -13,3 +13,9 @@ Simulated student: I am an MBA student managing a synthetic pop-up retail sales 
 Agent: PLAN names contribution profit (not net), caps/rules, rejection preserving prior dataset, no returns/refunds, no persistence; remaining model limitation is sales rows must already express valid nonnegative quantities and unit values, so returns need separate treatment beyond v1. Please confirm assumptions/limitations acceptable after inspecting results or flag a misleading interpretation.
 
 Simulated student: Accepts assumptions. For the small update after first deployment, an active-filter summary is good.
+
+## Post-publication improvement interview
+
+Agent: A focused small update is an active-filter summary beside the matching count (dates/region/product, or “No filters”). It changes presentation only and makes filtered totals harder to mistake for the whole dataset.
+
+Simulated student, after first live verification: Accepts the v2 active-filter summary proposal: show dates/region/product or “No filters”, keep calculations unchanged.

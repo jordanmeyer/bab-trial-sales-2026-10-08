@@ -29,3 +29,7 @@ Browser tests must import the real model, show loading/failure states and a visi
 ## Agreement and remaining questions
 
 The simulated student agreed to v1 and supplied/corrected consequential policies in SIMULATED-CONVERSATION.md. No material model question remains. Campus Designer uses unchanged navy #012169 with Georgia/Arial system fonts, without university marks or affiliation claims. Public repository and first/second deployments were authorized by the real user; final approval is not required again. A later small improvement will be agreed after the first deployment.
+
+## Agreed v2 improvement after first live deployment
+
+Show the active inclusive date bounds, region and product below the matching-record count, or “No filters” when all controls are clear. This makes the scope of displayed totals explicit. The simulated student accepted it after observing v1 live. The model, input rules and all known answers remain unchanged. Acceptance: initial/reset/clear view says No filters; selecting North says Region: North; combined selections list each active date/region/product; cleared inputs disappear from the summary. Summary text must wrap at narrow widths and be inserted as text.
