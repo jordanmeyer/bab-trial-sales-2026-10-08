@@ -16,3 +16,7 @@ Parent CUA live verification: styled repository-path page loaded; baseline $390/
 ## Ordinary updates
 
 Revise the app and agreed plan as needed; derive expected outcomes before observing them. Commit source/tests/plan/workflow, run affected browser checks, and record the exact tested SHA. Recheck committed/staged/unstaged/untracked relevant files and compare PLAN.md to that checkpoint. Commit reports, confirm main/remote/Pages settings, push ordinarily, await the exact revision's successful deployment, then open the live URL and check the main interaction, one known answer and source link. Preserve earlier failed rounds. Do not force-push or rewrite history.
+
+## Second publication — evaluated candidate
+
+After first publication, the simulated student approved an active-filter summary (dates/region/product or No filters). Evaluated v2 source is `ac70646e09ac7f83e87460138c4291d566ea0513`; its agreed plan and actual browser results are recorded in Round 3 of EVALUATION.md. The model remains unchanged; 42/42 browser tests and summary/clear/narrow checks pass. Awaiting the second ordinary main push, exact workflow completion, and parent CUA live verification. Final live results will be saved locally after verification, without an unnecessary third deployment push.
