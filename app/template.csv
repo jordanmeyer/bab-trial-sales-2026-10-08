@@ -1,4 +1,13 @@
 date,region,product,quantity,unit_price,unit_cost
-2026-10-01,North,Notebook,10,20.00,12.00
-2026-10-02,South,Pen,5,30.00,18.00
-2026-10-03,North,Notebook,2,20.00,12.00
+2026-08-01,North,Notebook,10,20,12
+2026-08-02,South,Pen,20,10,8
+2026-08-03,North,Pen,10,10,6
+2026-08-04,South,Notebook,5,20,12
+2026-09-01,North,Notebook,20,20,14
+2026-09-02,South,Pen,30,10,8
+2026-09-03,North,Pen,15,10,6
+2026-09-04,South,Notebook,10,20,12
+2026-10-01,North,Notebook,30,20,22
+2026-10-02,South,Pen,40,10,8
+2026-10-03,North,Pen,20,10,6
+2026-10-04,South,Notebook,10,10,12

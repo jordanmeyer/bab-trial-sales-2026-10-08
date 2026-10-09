@@ -1,5 +1,7 @@
 const header = ['date', 'region', 'product', 'quantity', 'unit_price', 'unit_cost'];
-export const demo = 'date,region,product,quantity,unit_price,unit_cost\n2026-10-01,North,Notebook,10,20.00,12.00\n2026-10-02,South,Pen,5,30.00,18.00\n2026-10-03,North,Notebook,2,20.00,12.00\n';
+export const handCheck = 'date,region,product,quantity,unit_price,unit_cost\n2026-10-01,North,Notebook,10,20.00,12.00\n2026-10-02,South,Pen,5,30.00,18.00\n2026-10-03,North,Notebook,2,20.00,12.00\n';
+
+export const demo = "date,region,product,quantity,unit_price,unit_cost\n2026-08-01,North,Notebook,10,20,12\n2026-08-02,South,Pen,20,10,8\n2026-08-03,North,Pen,10,10,6\n2026-08-04,South,Notebook,5,20,12\n2026-09-01,North,Notebook,20,20,14\n2026-09-02,South,Pen,30,10,8\n2026-09-03,North,Pen,15,10,6\n2026-09-04,South,Notebook,10,20,12\n2026-10-01,North,Notebook,30,20,22\n2026-10-02,South,Pen,40,10,8\n2026-10-03,North,Pen,20,10,6\n2026-10-04,South,Notebook,10,10,12\n";
 
 function csvRecords(text) {
   const rows = [];
@@ -66,6 +68,7 @@ export function parseSales(text) {
 }
 
 export function filterSales(rows, { start = '', end = '', region = '', product = '' } = {}) {
+  if (start && end && start > end) throw Error('From date must be on or before through date. Results are invalid until corrected.');
   return rows.filter(row => (!start || row.date >= start) && (!end || row.date <= end) && (!region || row.region === region) && (!product || row.product === product));
 }
 
@@ -73,4 +76,10 @@ export function money(cents) {
   const sign = cents < 0 ? '−' : '';
   const digits = String(Math.abs(cents)).padStart(3, '0');
   return `${sign}$${digits.slice(0, -2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}.${digits.slice(-2)}`;
+}
+
+export function groupSales(rows) {
+  const groups = new Map();
+  for (const row of rows) { const key=JSON.stringify([row.region,row.product]); if(!groups.has(key))groups.set(key,[]); groups.get(key).push(row); }
+  return [...groups.values()].map(group=>({region:group[0].region,product:group[0].product,...totals(group)})).sort((a,b)=>b.profit-a.profit||a.region.localeCompare(b.region)||a.product.localeCompare(b.product));
 }

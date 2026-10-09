@@ -1,4 +1,4 @@
-import { parseSales, totals, filterSales, money, demo } from '../app/model.js';
+import { parseSales, totals, filterSales, money, handCheck as demo, demo as varied, groupSales } from '../app/model.js';
 const header = 'date,region,product,quantity,unit_price,unit_cost\n';
 const csv = line => header + line;
 const standard = '2026-10-01,North,Notebook,10,20.00,12.00';
@@ -13,6 +13,10 @@ const rejects = (text, message) => {
   throw Error('Expected rejection; import accepted');
 };
 export const cases = [
+  ['Varied sample independently summed: 2950/2350/600 and 220 units', () => equal(totals(parseSales(varied)), {revenue:295000,cost:235000,profit:60000,units:220})],
+  ['Within-product regional comparison has independent totals', () => equal(groupSales(parseSales(varied)).map(g=>[g.region,g.product,g.units,g.revenue,g.cost,g.profit]), [['North','Pen',45,45000,27000,18000],['South','Pen',90,90000,72000,18000],['North','Notebook',60,120000,106000,14000],['South','Notebook',25,40000,30000,10000]])],
+  ['Invalid date interval is rejected, not a valid empty view', () => {let rejected=false;try{filterSales(parseSales(demo),{start:'2026-10-03',end:'2026-10-01'});}catch(e){rejected=e.message.includes('Results are invalid');}equal(rejected,true);}],
+  ['Identical sales lines are not silently deduplicated', () => equal(totals(parseSales(header+standard+'\n'+standard)).revenue,40000)],
   ['Independent demo totals: $390/$234/$156/17', () => equal(totals(parseSales(demo)), { revenue: 39000, cost: 23400, profit: 15600, units: 17 })],
   ['North totals: $240/$144/$96/12', () => equal(totals(filterSales(parseSales(demo), { region: 'North' })), { revenue: 24000, cost: 14400, profit: 9600, units: 12 })],
   ['Inclusive date window: October 2', () => equal(totals(filterSales(parseSales(demo), { start: '2026-10-02', end: '2026-10-02' })), { revenue: 15000, cost: 9000, profit: 6000, units: 5 })],
