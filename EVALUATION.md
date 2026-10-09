@@ -97,3 +97,12 @@ After the source/report commits, root reran the actual browser suite against the
 ### Scoped result-view layout witness
 
 Root subsequently pictured the current result at an actual 319 CSS-pixel narrow width and in a separate nominal 1280px frame with authored 200% computed-font enlargement. The displayed result was readable and page client/scroll widths matched. These are result-view observations, not complete coverage of every expanded table, disclosure, input state or reachable control, and not native device zoom. ALL-12 remains open for broader task coverage; screen-reader and novice gates remain open. No source change or push accompanied this record.
+
+
+## Actual template, generated-export and filter-recovery workflow — 4/4 PASS
+
+Root ran tests/export-workflow.html through CUA at tests-only checkpoint 45dbbfaf677cde599b4e541d34faf8c892dc0f0e; application/model source remains 3734d1f1676267bd8ec44924941fcda1a198563a. Actual observations are preserved in course sales/browser-export-recovery.json. The authored harness fetched the template URL actually linked by the app, observed its six headers and twelve data rows, and imported that file through the real File/DataTransfer input path. The visible source identity and $2,950 revenue / $2,350 cost / $600 contribution / 220 units matched the independent reference.
+
+September–October / North / Pen selected two actual rows, 35 units, $350 revenue / $210 cost / $140 contribution. Both generated matching-row CSV and analytical JSON matched every selected row, the uploaded filename, active filters, exact cents/whole-unit policy, group totals, provenance caution and model limitations. The Blob handoff was captured; native saving was not exercised.
+
+An actual reversed date interval hid invalid results/exports while retaining the loaded source identity and marked both date fields invalid. The actual Clear filters button restored the complete imported source. A valid 2027 date interval produced an explained zero-match view with zero totals, then Clear these filters restored all twelve rows and default totals. These add actual authored UI evidence for SALES-01/10/11/12 and contextual-export evidence for ALL-07/14. They do not establish native file-picker/save behavior, a screen-reader task or the uncoached SALES-13 / ALL-16 novice workflow. No app/model/prior-test edits, new dependencies or push accompanied this harness.
