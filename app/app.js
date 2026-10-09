@@ -52,5 +52,5 @@ $('#upload').addEventListener('change', async event => {
 $('#demo').addEventListener('click', () => load(demo, 'synthetic demo'));
 $('#filters').addEventListener('input', render);
 $('#filters').addEventListener('submit', event => event.preventDefault());
-$('#filters').addEventListener('reset', () => queueMicrotask(render));
+$('#filters').addEventListener('reset', () => setTimeout(render, 0));
 load(demo, 'synthetic demo');
