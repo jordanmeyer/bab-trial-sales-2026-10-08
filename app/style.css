@@ -24,7 +24,7 @@ summary { cursor: pointer; color: #012169; padding: .35rem 0; }
 details p { max-width: 70ch; }
 code, #active-filters { overflow-wrap: anywhere; }
 #error, #filter-error { border-left: 4px solid #C84E00; background: #FCF7E5; padding: 1rem; }
-.metrics { display: grid; grid-template-columns: repeat(4, 1fr); background: white; border-top: 4px solid #012169; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15em), 1fr)); background: white; border-top: 4px solid #012169; }
 .metrics div { padding: 1.3rem; min-width: 0; }
 .metrics span { display: block; margin-bottom: .75rem; }
 .metrics strong { font-size: clamp(1.4rem, 2.5vw, 2rem); color: #012169; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
@@ -38,5 +38,7 @@ th { color: #012169; background: #E2E6ED; }
 th:nth-child(n+4), td:nth-child(n+4) { text-align: right; white-space: nowrap; }
 td:nth-child(3) { min-width: 10rem; overflow-wrap: anywhere; }
 footer { padding-top: 1rem; padding-bottom: 2rem; font-size: .9rem; }
-@media (max-width: 650px) { main, footer { padding-left: 1rem; padding-right: 1rem; } .metrics { grid-template-columns: repeat(2, 1fr); } form { display: grid; grid-template-columns: 1fr 1fr; } form label { min-width: 0; } input, select { width: 100%; min-width: 0; } .file { width: 100%; } .metrics div { padding: 1rem; } }
+@media (max-width: 650px) { main, footer { padding-left: 1rem; padding-right: 1rem; } form { display: grid; grid-template-columns: 1fr 1fr; } form label { min-width: 0; } input, select { width: 100%; min-width: 0; } .file { width: 100%; } .metrics div { padding: 1rem; } }
 [hidden] { display:none; } button:disabled { background:#E5E5E5; color:#666; border-color:#666; cursor:default; } #coverage,#count,#empty-message { overflow-wrap:anywhere; } .table-wrap td:first-child { overflow-wrap:anywhere; } #invalid-result { border-left:4px solid #C84E00; padding:1rem; background:#FCF7E5; } details { margin:1rem 0; } #groups td { min-width:0; } #groups td:nth-child(-n+2) { min-width:8rem; overflow-wrap:anywhere; white-space:normal; } #groups th:nth-child(n+3),#groups td:nth-child(n+3) { text-align:right; } #groups th { white-space:normal; }
+
+#rows td:first-child { white-space: nowrap; overflow-wrap: normal; }

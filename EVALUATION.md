@@ -111,3 +111,14 @@ An actual reversed date interval hid invalid results/exports while retaining the
 ### Independent export-workflow source review
 
 The models reviewer read the complete export-workflow harness, current app.js and actual template.csv. The twelve-row reference ($2,950/$2,350/$600/220 units) and September–October North Pen subset ($350/$210/$140/35 units) independently reconcile. Real synchronous filter events, async import completion, deferred reset rendering, no-match recovery, Blob filenames and exact cents/rows/filter/provenance assertions were coherent. Hooks restore in finally; no actionable race or false-pass issue was found. This source PASS is separate from root’s actual4/4 browser result and makes no native picker/save or human-session claim.
+
+
+### Final layout correction — keep record dates and metric amounts whole
+
+Root's actual 319px matching-records capture exposed ISO dates split into four fragments (for example `202` / `6-` / `08-` / `01`). This is a failed narrow-layout round, retained in the course evidence as `final-layout/sales-narrow-record-start.png`; earlier model and export passes do not erase it.
+
+The correction targets only the first date cell in `#rows`: keep its text on one line and remove arbitrary word wrapping. The existing labeled horizontal table scroll region owns the resulting intrinsic width. Product and region labels keep their existing wrapping. Both HTML pages reference stylesheet version 5 so a returning visitor can request the corrected CSS. The settled enlarged capture `final-layout/sales-enlarged-groups-settled.png` exposed a second failure: Revenue and Product cost split their cents onto a separate line. The metric grid now chooses columns from a 15em minimum capped by available width, so it adapts to the current text size. The fixed two-column narrow override is removed, giving the observed default amounts enough space to remain whole. The existing emergency wrapping for extreme accepted amounts is retained instead of introducing horizontal page overflow with an unconditional nowrap rule. This preserves enlarged text rather than reducing its size. Application JavaScript, model, plan and every authored test are unchanged.
+
+Surrounding table markup, row rendering and the complete stylesheet were reviewed; the scoped whitespace check passed. No unchanged model suite was repeated. Root's fresh narrow/enlarged rendered retest and normal live publication check are pending; this source correction alone is not layout acceptance.
+
+Independent operations source review read the full stylesheet, index, controller, model bounds and both cache-link edits. It confirmed the responsive grid, retained emergency wrapping, targeted date rule and intentional local table overflow; no actionable source defect remained. This source PASS does not replace the pending actual rendered retest.
