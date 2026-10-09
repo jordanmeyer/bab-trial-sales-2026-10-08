@@ -9,3 +9,5 @@
 - Initial public destination authorized: jordanmeyer/bab-trial-sales-2026-10-08. Parent coordinates repository creation/push/live checks.
 
 - After the first live deployment, the simulated student approved an active-filter summary to reduce confusion between filtered and whole-dataset totals. It changes presentation only.
+
+- Preventative publication fix after a sibling trial actually exhibited stale script caching: version the changed sales entry script URL as app.js?v=2. Sales had not yet been checked live on its second deployment, so no sales-specific failure is asserted.
