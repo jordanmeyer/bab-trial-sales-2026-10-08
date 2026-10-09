@@ -29,3 +29,11 @@ Simulated student reviewed and accepted the stated contribution-profit assumptio
 Separate source simplification pass: one CSV parser and one totals function, shared by UI/browser tests, native input/select/table primitives, no runtime/build dependency, no generic harness. Publication contains only app/; test fixtures and reports remain source-only. Full initial history was inspected: approved public author attribution and public/synthetic content only; no deleted sensitive records or imports.
 
 Known limits: no returns/refunds model, full accounting costs, persistence, network services or forecast. File caps bound computation but this is not a general-purpose data warehouse. Browser observations apply only to the exercised browser/viewport/actions, not a universal accessibility/security certification.
+
+## Round 2 — passed after reset repair
+
+Tested commit: `f30068f238939b95eb96ead3fc8f3d347785f4bf`. Same relevant paths and unchanged agreed PLAN.md. Exact committed/staged/working-tree freshness diffs, untracked relevant-file listing and plan comparison passed both immediately before the rerun request and after the results arrived.
+
+Parent's CUA browser rerun observed **42/42 passed, 0 failed**. After reversed dates, keyboard Enter on Clear filters restored three records and $390.00 revenue/$234.00 cost/$156.00 contribution/17 units, and hid the error. North + Pen produced an empty view; mouse Clear filters restored the same baseline. No new console errors. Prior good/bad file import, keyboard Reset to demo, template download and 1439px/319px observations from Round 1 remain applicable: the sole app change schedules the native reset's existing render one task later. No model, parser, filters or layout changed. The originally failed round remains above.
+
+Method: parent-operated CUA browser UI and rendered test page through the existing Python loopback server. Browser version was not captured. Network capture and 200% text zoom were not performed; their behavior remains unverified. Source inspection shows relative local assets/modules and no fetch, analytics, remote font or external-script calls; that is source evidence, not a measured network-isolation claim. No broader accessibility certification is asserted. The exercised numerical/parser and required functional flows pass; the stated inspection limits remain explicit.
