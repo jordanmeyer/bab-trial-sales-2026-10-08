@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sales lens checks</title><link rel="stylesheet" href="../app/style.css"></head>
+<body><main><h1>Sales lens checks</h1><p id="summary" role="status">Loading test modules. No pass has been established.</p><ol id="results"></ol><a href="../app/">Open dashboard</a></main>
+<script type="module">
+try {
+  const { cases } = await import('./cases.js');
+  let passed = 0;
+  for (const [name, run] of cases) {
+    const li = document.createElement('li');
+    try { run(); passed++; li.textContent = `PASS — ${name}`; }
+    catch (error) { li.textContent = `FAIL — ${name}: ${error.message}`; }
+    document.querySelector('#results').append(li);
+  }
+  document.querySelector('#summary').textContent = `${passed} / ${cases.length} passed; ${cases.length - passed} failed.`;
+} catch (error) { document.querySelector('#summary').textContent = `ERROR: test modules did not complete — ${error.message}`; }
+</script></body></html>

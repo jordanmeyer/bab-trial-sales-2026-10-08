@@ -1,0 +1,4 @@
+date,region,product,quantity,unit_price,unit_cost
+2026-10-01,North,Notebook,10,20.00,12.00
+2026-10-02,South,Pen,5,30.00,18.00
+2026-10-03,North,Notebook,2,20.00,12.00

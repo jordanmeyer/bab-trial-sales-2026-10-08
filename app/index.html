@@ -2,19 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Your browser app</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sales lens</title>
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
+  <header><p class="eyebrow">A synthetic retail exercise</p><h1>Sales lens</h1><p>See what contributes. Filter sales by date, region and product.</p></header>
   <main>
-    <p class="eyebrow">Local project · Starter preview</p>
-    <h1>Your browser app starts here.</h1>
-    <p>Define a useful problem, make the assumptions explicit, and check the result.</p>
-    <button type="button" id="check">Check interaction</button>
-    <p id="status" role="status">Waiting for the JavaScript module. Open this page through your project preview.</p>
-    <aside>This is a starter, not an evaluated application. Plan the behavior before building it.</aside>
+    <section aria-labelledby="data-heading">
+      <h2 id="data-heading">1. Choose your data</h2>
+      <div class="actions"><label class="file">Upload CSV <input id="upload" type="file" accept=".csv,text/csv" aria-describedby="format"></label><button id="demo" type="button">Reset to demo</button><a href="./template.csv" download>Download synthetic template</a></div>
+      <p id="format" class="muted">USD · up to 1 MB / 10,000 records · Files stay in this browser tab.</p>
+      <details><summary>CSV format and limits</summary><p>Columns must be <code>date,region,product,quantity,unit_price,unit_cost</code> in that order. Use YYYY-MM-DD dates, whole quantities (0–1,000,000), and nonnegative unit amounts up to $1,000,000 with at most two decimals. Quote names containing commas or quotes. Every field is required; an invalid file is rejected as a whole.</p></details>
+      <p id="status" role="status">Loading the dashboard…</p>
+      <p id="error" role="alert" hidden></p>
+    </section>
+    <section aria-labelledby="filters-heading">
+      <h2 id="filters-heading">2. Focus the view</h2>
+      <form id="filters"><label>From date<input type="date" id="start"></label><label>Through date<input type="date" id="end"></label><label>Region<select id="region"><option value="">All regions</option></select></label><label>Product<select id="product"><option value="">All products</option></select></label><button type="reset">Clear filters</button></form>
+      <p id="filter-error" role="alert" hidden>From date must be on or before through date.</p>
+    </section>
+    <section aria-labelledby="results-heading">
+      <h2 id="results-heading">3. Read the contribution</h2>
+      <p id="count" role="status"></p>
+      <div class="metrics"><div><span>Revenue</span><strong id="revenue">—</strong></div><div><span>Product cost</span><strong id="cost">—</strong></div><div><span>Contribution profit</span><strong id="profit">—</strong></div><div><span>Units sold</span><strong id="units">—</strong></div></div>
+      <p class="note">Contribution profit = revenue − product cost. Excludes overhead, taxes, shipping and returns. This is not net profit or a forecast.</p>
+      <p id="empty" hidden>No sales match this view. Try clearing filters or loading another file.</p>
+      <div class="table-wrap" role="region" aria-label="Sales records, scroll horizontally if needed" tabindex="0"><table><caption>Matching sales · USD</caption><thead><tr><th>Date</th><th>Region</th><th>Product</th><th>Units</th><th>Revenue</th><th>Cost</th><th>Contribution</th></tr></thead><tbody id="rows"></tbody></table></div>
+    </section>
   </main>
+  <footer><p>Independent student exercise · Synthetic demo data</p><a href="https://github.com/jordanmeyer/bab-trial-sales-2026-10-08">View source on GitHub</a></footer>
 </body>
 </html>
